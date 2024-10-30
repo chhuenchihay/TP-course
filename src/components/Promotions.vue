@@ -2,7 +2,7 @@
     <button class="Promotion" :style="{ backgroundColor: color}">
         <img :src="image" class="categoriesImage" >
         <h2 :class="description" class="description" >{{ description }}</h2>
-        <Buttons color="#3BB77E"></Buttons>
+        <Buttons :color=buttonColor :description="description"></Buttons>
     </button>
 </template>
 
@@ -14,7 +14,8 @@ export default {
         Buttons,
     },
     name: "Promotions",
-    props: ["color", "description", "image"]
+    props: ["color", "description", "image", "buttonColor"],
+
 }
 </script>
 

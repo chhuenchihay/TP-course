@@ -1,42 +1,51 @@
 <script>
-import { computed } from 'vue';
-import Category from './components/Category.vue'
-import Promotions from './components/Promotions.vue';
-import axios from 'axios';
+import Category from "./components/Category.vue";
+import Promotions from "./components/Promotions.vue";
+import { useProductStore } from "./stores/ProductStore";
 
-export default{
+export default {
   name: "App",
   components: {
-    Category, Promotions
+    Category,
+    Promotions,
   },
-
-  data (){
+  data() {
     return {
-      Category: [],
-      Promotions: []
+      currentGroupName: 'Group A',
+      groups: [],
+      products: [],
+      categories: [],
+      promotions: [],
     };
   },
-
   methods: {
-    getCategory() {
-      axios.get('http://localhost:3000/api/categories')
-        .then(response => {
-          this.Category = response.data;
-        })
+    async getAllData() {
+      try {
+        const productStore = useProductStore();
+
+        await productStore.getGroups();
+        await productStore.getProducts();
+        await productStore.getCategories();
+        await productStore.getPromotions();
+
+        this.groups = productStore.groups;
+        this.products = productStore.products;
+        this.categories = productStore.categories;
+        this.promotions = productStore.promotions;
+
+        console.log("Groups:", this.groups);
+        console.log("Products:", this.products);
+        console.log("Categories:", this.categories);
+        console.log("Promotions:", this.promotions);
+      } catch (error) {
+        console.error("Error getting data:", error);
+      }
     },
-    getPromotion() {
-      axios.get('http://localhost:3000/api/promotions')
-        .then(response => {
-          this.Promotions = response.data;
-        })
-    },
-    
   },
   mounted() {
-    this.getCategory();
-    this.getPromotion();
-  }
-}
+    this.getAllData();
+  },
+};
 </script>
 
 <template>

@@ -23,27 +23,27 @@ export const useProductStore = defineStore("product", {
     },
     
     actions: {
-        async getGroups() {
-        try {
-            const response = await axios.get(
-                "http://localhost:3000/api/groups"
-            );
-            this.groups = response.data;
-        } catch (error) {
-            console.error("Error fetching groups:", error);
-        }
-        },
+        // async getGroups() {
+        // try {
+        //     const response = await axios.get(
+        //         "http://localhost:3000/api/groups"
+        //     );
+        //     this.groups = response.data;
+        // } catch (error) {
+        //     console.error("Error fetching groups:", error);
+        // }
+        // },
 
-        async getProducts() {
-        try {
-            const response = await axios.get(
-                "http://localhost:3000/api/products"
-            );
-            this.products = response.data;
-        } catch (error) {
-            console.error("Error fetching products:", error);
-        }
-        },
+        // async getProducts() {
+        // try {
+        //     const response = await axios.get(
+        //         "http://localhost:3000/api/products"
+        //     );
+        //     this.products = response.data;
+        // } catch (error) {
+        //     console.error("Error fetching products:", error);
+        // }
+        // },
 
         async getCategories() {
         try {
@@ -56,15 +56,15 @@ export const useProductStore = defineStore("product", {
         }
         },
 
-        async getPromotions() {
-        try {
-            const response = await axios.get(
-                "http://localhost:3000/api/promotions"
-            );
-            this.promotions = response.data;
-        } catch (error) {
-            console.error("Error fetching promotions:", error);
-        }
-        },
+        // async getPromotions() {
+        // try {
+        //     const response = await axios.get(
+        //         "http://localhost:3000/api/promotions"
+        //     );
+        //     this.promotions = response.data;
+        // } catch (error) {
+        //     console.error("Error fetching promotions:", error);
+        // }
+        // },
     },
 });

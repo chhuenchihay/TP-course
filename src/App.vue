@@ -1,6 +1,8 @@
 <script>
 import Category from "./components/Category.vue";
 import Promotions from "./components/Promotions.vue";
+import Menu from "./components/Menu.vue";
+import Product from "./components/Product.vue";
 import { useProductStore } from "./stores/ProductStore";
 
 export default {
@@ -8,14 +10,18 @@ export default {
   components: {
     Category,
     Promotions,
+    Menu,
+    Product,
   },
   data() {
     return {
-      currentGroupName: 'Group A',
+      currentGroupName: 'Group 1',
       groups: [],
       products: [],
       categories: [],
       promotions: [],
+      Menu: [],
+      Product: [],
     };
   },
   methods: {
@@ -51,6 +57,7 @@ export default {
 <template>
   <div id="app">
     <div class="container">
+      <Menu name="Featured Categories"></Menu>
       <div class="wrapperUp">
         <Category
           v-for="items in Category"
@@ -62,6 +69,8 @@ export default {
         ></Category>
       </div>
 
+      <Menu name="Popular Products"></Menu>
+
       <div class="wrapperDown">
         <Promotions
           v-for="Promotion in Promotions"
@@ -72,12 +81,15 @@ export default {
           :description="Promotion.description"
         ></Promotions>
       </div>
+      
+      <Product image="images/apple.png"></Product>
+
     </div>
   </div>
   <RouterView />
 </template>
 
-<style>
+<style scoped>
 #app {
   display: flex;
   width: 100%;

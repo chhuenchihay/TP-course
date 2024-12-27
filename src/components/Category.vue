@@ -1,17 +1,23 @@
 <template>
-    <button class="item" :style="{ backgroundColor: color}">
-        <img :src="image" class="image">
+    <div class="item" :style="{ backgroundColor: color}">
+        <div class="Image"><img :src="image" class="image"></div>
         <div class="box">
-            <h3 :class="name" class="name" >{{ name }}</h3>
-            <h4 :class="amount" class="amount" >{{ amount }}</h4>
+            <h3 class="name" >{{ name }}</h3>
+            <h4 class="amount" >{{ productCount }}</h4>
         </div>
-    </button>
+    </div>
 </template>
 
 <script>
 export default {
     name: "Category",
-    props: ["color", "name", "amount", "image"]
+    // props: ["color", "name", "amount", "image"]
+    props:{
+        color: String,
+        name: String,
+        image: String,
+        productCount: Number
+    }
 }
 </script>
 
@@ -21,12 +27,21 @@ export default {
     font-family: 'Poppins', sans-serif;
     display: flex;
     flex-direction: column;
-    width: 8.75rem;
-    height: 11.25rem;
+    width: 10rem;
+    height: 13.25rem;
     border: none;
     border-radius: 0.5rem;
     align-items: center;
     justify-content: center;
+}
+.Image{
+    width: 100%;
+    height: 60%;
+}
+.Image img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .amount{

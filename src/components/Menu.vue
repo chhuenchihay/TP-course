@@ -1,6 +1,6 @@
 <template>
     <div class="menu">
-        <h1 :class="name" class="name" >{{ name }}</h1>
+        <h1 class="name" >{{ name }}</h1>
         <div class="wrapper">
             <button>All</button>
             <button>Milks & Dairies</button>
@@ -34,11 +34,26 @@ export default {
     display: flex;
     flex-direction: row;
     align-items: baseline;
-
+    width: 100%;
+    justify-content: space-between;
+    padding: 0 1rem 0 1rem;
 }
 
-.button{
+.name{
+    font-family: 'Poppins', sans-serif;
+    color: rgb(50, 51, 50);
+}
+
+.wrapper{
+    display: flex;
+    gap: 1rem;
+}
+
+button{
     border: none;
+    font-size: larger;
+    font-family: 'Poppins', sans-serif;
+    background-color: white;
 }
 
 </style>

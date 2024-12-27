@@ -4,6 +4,7 @@ import Promotions from "./components/Promotions.vue";
 import Menu from "./components/Menu.vue";
 import Product from "./components/Product.vue";
 import { useProductStore } from "./stores/ProductStore";
+import { onMounted } from "vue";
 
 export default {
   name: "App",
@@ -11,48 +12,70 @@ export default {
     Category,
     Promotions,
     Menu,
-    Product,
+    Product
   },
-  data() {
-    return {
-      currentGroupName: 'Group 1',
-      groups: [],
-      products: [],
-      categories: [],
-      promotions: [],
-      Menu: [],
-      Product: [],
-    };
-  },
-  methods: {
-    async getAllData() {
-      try {
-        const productStore = useProductStore();
+  setup() {
+      const productStore = useProductStore();
+      onMounted(async () => {
+        try {
+          // await productStore.fetchGroups();
+          // console.log("Fetching Groups:", productStore.groups);
 
-        await productStore.getGroups();
-        await productStore.getProducts();
-        await productStore.getCategories();
-        await productStore.getPromotions();
+          await productStore.fetchCategories();
+          console.log("Categories:", productStore.categories);
+  
+          await productStore.fetchPromotions();
+          console.log("Promotions:", productStore.promotions);
 
-        this.groups = productStore.groups;
-        this.products = productStore.products;
-        this.categories = productStore.categories;
-        this.promotions = productStore.promotions;
-
-        console.log("Groups:", this.groups);
-        console.log("Products:", this.products);
-        console.log("Categories:", this.categories);
-        console.log("Promotions:", this.promotions);
-      } catch (error) {
-        console.error("Error getting data:", error);
-      }
+          await productStore.fetchProducts();
+          console.log("products:", productStore.products);
+  
+          // console.log("Fetching Products...");
+          // await productStore.fetchProducts();
+          // console.log("Products:", productStore.products);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      });
+      return {
+        productStore,
+      };
     },
-  },
-  mounted() {
-    this.getAllData();
-  },
+  // setup() {
+  //   const productStore = useProductStore(); // Access the Pinia store instance
+
+  //   const logCategories = async () => {
+  //     try {
+  //       const categories = await productStore.fetchCategories(); // Call the fetchCategories action
+  //       console.log("Fetched Categories:", categories);
+  //     } catch (error) {
+  //       console.error("Error logging categories:", error);
+  //     }
+  //   };
+
+  //   const logPromotions = async () => {
+  //     try {
+  //       const promotions = await productStore.fetchPromotions(); // Call the fetchPromotions action
+  //       console.log("Fetched Promotions:", promotions);
+  //     } catch (error) {
+  //       console.error("Error logging promotions:", error);
+  //     }
+  //   };
+
+    // onMounted(() => {
+    //   logCategories();
+    //   logPromotions();
+    // });
+
+  //   return {
+  //     productStore,
+  //     logCategories,
+  //     logPromotions,
+  //   };
+  // },
 };
 </script>
+
 
 <template>
   <div id="app">
@@ -60,42 +83,57 @@ export default {
       <Menu name="Featured Categories"></Menu>
       <div class="wrapperUp">
         <Category
-          v-for="items in Category"
-          :key="items"
+          v-for="items in productStore.categories"
+          :key="items.id"
           :color="items.color"
           :name="items.name"
           :image="items.image"
-          :amount="items.amount"
+          :productCount="items.productCount"
         ></Category>
       </div>
 
-      <Menu name="Popular Products"></Menu>
-
       <div class="wrapperDown">
         <Promotions
-          v-for="Promotion in Promotions"
-          :key="Promotion"
+          v-for="Promotion in productStore.promotions"
+          :key="Promotion.id"
           :color="Promotion.color"
           :buttonColor="Promotion.buttonColor"
           :image="Promotion.image"
-          :description="Promotion.description"
+          :title="Promotion.title"
         ></Promotions>
       </div>
+
+      <Menu name="Popular Products"></Menu>
       
-      <Product image="images/apple.png"></Product>
+      <div class="proContainer">
+        <Product
+        v-for="productItem in productStore.products"
+          :key="productItem.id"
+          :name="productItem.name"
+          :rating="productItem.rating"
+          :size="productItem.size"
+          :image="productItem.image"
+          :price="productItem.price"
+          :promotionAsPercentage="productItem.promotionAsPercentage"
+          :instock="productItem.instock"
+          :countSold="productItem.countSold"
+        ></Product>
+      </div>
 
     </div>
   </div>
-  <RouterView />
 </template>
+
 
 <style scoped>
 #app {
+  background-color: rgb(255, 255, 255);
   display: flex;
   width: 100%;
   height: 100vh;
   align-items: center;
   justify-content: center;
+  margin: 2rem;
 }
 
 .container {
@@ -105,7 +143,7 @@ export default {
   height: 100vh;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
+  gap: 4rem;
 }
 
 .wrapperUp {
@@ -122,4 +160,12 @@ export default {
   justify-content: space-between;
   gap: 1rem;
 }
+
+.proContainer{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.75rem;
+}
+
 </style>

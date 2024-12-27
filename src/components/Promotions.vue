@@ -1,8 +1,8 @@
 <template>
     <button class="Promotion" :style="{ backgroundColor: color}">
         <img :src="image" class="categoriesImage" >
-        <h2 :class="description" class="description" >{{ description }}</h2>
-        <Buttons :color=buttonColor :description="description"></Buttons>
+        <h2 class="description" >{{ title }}</h2>
+        <Buttons :color=buttonColor :title="title"></Buttons>
     </button>
 </template>
 
@@ -14,7 +14,12 @@ export default {
         Buttons,
     },
     name: "Promotions",
-    props: ["color", "description", "image", "buttonColor"],
+    props: {
+        title: String,
+        buttonColor: String,
+        color: String,
+        image: String
+    },
 
 }
 </script>
@@ -40,7 +45,7 @@ export default {
     font-family: 'Poppins', sans-serif;
     position: absolute;
     left: 2rem;
-    top: 25%;
+    top: 15%;
     white-space: normal;
     width: 15rem;
     text-align: left;

@@ -7,12 +7,14 @@
 <script>
 export default {
     name: "Buttons",
-    props: ["color", 'description'],
-    
+    props: {
+        color: String,
+        title: String
+    },
 
     methods: {
         shopNow(Promotions) {
-            alert("Let's shop! " + this.description);
+            alert("Let's shop! " + this.title);
         }
     },
 }
@@ -30,5 +32,8 @@ export default {
     height: 2rem;
     border: none;
     border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 </style>

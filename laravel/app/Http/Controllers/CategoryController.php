@@ -10,6 +10,8 @@ class CategoryController extends Controller
     public function getCategories()
     {
         return ["message" => "Getting list of categories"];
+        // $categories = Category::all();
+        // return response()->json($categories);
     }
 
     // --- Post /api/categories

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->bigInteger('category_id')->unsigned();
             $table->double('pricing');
             $table->text('description')->nullable();
-            $table->jsonb('image')->nullable();
+            $table->jsonb('images')->nullable();
             $table->timestamps();
 
             $table->foreign('category_id')->references('id')->on('categories');

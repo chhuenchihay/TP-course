@@ -3,38 +3,48 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Category;
 
 class CategoryController extends Controller
 {
     // --- Get /api/categories
     public function getCategories()
     {
-        return ["message" => "Getting list of categories"];
-        // $categories = Category::all();
-        // return response()->json($categories);
+        $categories = Category::all();
+        return response()->json($categories);
     }
 
     // --- Post /api/categories
-    public function createCategory()
+    public function createCategory(Request $request)
     {
-        return ["message" => "Creating 1 new category"];
+        $category = Category::create([
+            'name' => $request->name,
+        ]);
+        return response()->json($category);
     }
 
     // --- Get /api/categories/{categoryId}
     public function getCategory($categoryId)
     {
-        return ["message" => "Getting 1 category base on given categoryId"];
+        $category = Category::find($categoryId);
+        return response()->json($category);
     }
 
     // --- Get /api/categories/{categoryId}
-    public function updateCategory($categoryId)
+    public function updateCategory($categoryId, Request $request)
     {
-        return ["message" => "Update category based on given categoryId"];
+        $category = Category::find($categoryId);
+        $category->update([
+            'name' => $request->name,
+        ]);
+        return response()->json($category);
     }
 
     // --- Delete /api/categories/{categoryId}
     public function deleteCategory($categoryId)
     {
-        return ["message" => "Deleting 1 category based on given categoryId"];
+        $category = Category::find($categoryId);
+        $category->delete();
+        return ["message" => "Deleting 1 category id $categoryId"];
     }
 }

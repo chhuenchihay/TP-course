@@ -35,7 +35,7 @@ class ProductController extends Controller
             'pricing' => $request->pricing,
             'images' => $imagePaths,
         ]);
-        return response()->json($product);
+        return response()->json($product, 201);
     }
 
     // --- Get /api/products/{productId}

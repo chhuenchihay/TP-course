@@ -20,7 +20,7 @@ class CategoryController extends Controller
         $category = Category::create([
             'name' => $request->name,
         ]);
-        return response()->json($category);
+        return response()->json($category, 201);
     }
 
     // --- Get /api/categories/{categoryId}

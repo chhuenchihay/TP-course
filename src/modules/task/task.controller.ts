@@ -11,29 +11,41 @@ import { TaskService } from './task.service';
 
 @Controller('tasks')
 export class TasksController {
-  constructor(private readonly taskService: TaskService) {}
+  constructor(private readonly taskService: TaskService) { }
+
+  @Get()
+  getAllTask() {
+    return this.taskService.getAllTask();
+  }
 
   @Get('/:id')
   getTask(@Param('id') id: string) {
     return this.taskService.getTask(id);
+
   }
-  @Post('/')
+  @Post()
   createTask(@Body() body: any) {
     return this.taskService.createTask(body);
   }
 
   @Patch('/:id/done')
-  markTaskAsDone(@Body() body: any, @Param('id') id: string) {
-    return this.taskService.updateTask(id, body);
+  markAsDone(@Param('id') id: string) {
+    return this.taskService.update(id, { completedAt: new Date() });
   }
 
   @Patch('/:id/pending')
-  markTaskAsPending(@Body() body: any, @Param('id') id: string) {
-    return this.taskService.updateTask(id, body);
+  markAsPending(@Param('id') id: string) {
+    return this.taskService.update(id, { completedAt: null });
   }
 
   @Delete('/:id')
   deleteTask(@Param('id') id: string) {
     return this.taskService.deleteTask(id);
   }
+
+  @Delete()
+  deleteAllTasks() {
+    return this.taskService.deleteAllTasks();
+  }
+
 }

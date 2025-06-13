@@ -2,7 +2,6 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from 'src/users/user.entity';
-import * as bcrypt from 'bcrypt';
 import { Task } from 'src/tasks/task.entity';
 
 @Injectable()

@@ -6,12 +6,14 @@ import {
   Delete,
   Param,
   Body,
-  NotFoundException,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 
 import { UsersService } from './user.service';
 import { User } from 'src/users/user.entity';
 import { Task } from 'src/tasks/task.entity';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -28,8 +30,9 @@ export class UsersController {
   }
 
   @Post()
-  async create(@Body() body: any): Promise<User> {
-    return this.userService.create(body);
+  @UsePipes(new ValidationPipe({ whitelist: true }))
+  create(@Body() createUserDto: CreateUserDto) {
+    return this.userService.create(createUserDto);
   }
 
   @Put(':id')
